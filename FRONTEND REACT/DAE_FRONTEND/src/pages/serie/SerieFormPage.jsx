@@ -92,7 +92,7 @@ function SerieFormPage(){
                         <select onChange={onChangeCategoria} className="form-select" id="inputCategory" required >
                             <option value="">Seleccione una opción</option>
                             {categories.map((item)=>(
-                            <option key={item.id} value={item.id}>{item.description}</option>
+                            <option key={item.id} value={item.id}>{item.name}</option>
                             ))}
                         </select>
                     </div>
