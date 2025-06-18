@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAllCategoryService } from "../../services/CategoryService";
 import { createSerieService } from "../../services/serieServices";
+import useSerieStore from '../../store/serieStore';
 
 
 const initData = {
@@ -20,6 +21,7 @@ function SerieFormPage(){
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [data, setData] = useState(initData);
+    const setSeries = useSerieStore((state) => state.setSeries);
 
 
     const loadCategories = async () => {
@@ -57,7 +59,9 @@ function SerieFormPage(){
         e.preventDefault();
         try {
             await createSerieService(data);
-            console.log('Enviando', data);
+            const resp = await fetch('http://localhost:8000/series/api/v1/series/');
+            const series = await resp.json();
+            setSeries(series);
             navigate('/series');
         } catch (error) {
             console.error(error);

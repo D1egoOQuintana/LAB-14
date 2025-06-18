@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SerieComponent from '../components/SerieComponent';
 import { getAllSerieService, deleteSerieService } from '../services/serieServices';
+import useSerieStore from '../store/serieStore';
 
 function SeriePage() {
-    const urlApi = 'http://localhost:8000/series/api/v1/series/';
 
-    const [series, setSeries] = useState([]);
+    const series = useSerieStore((state) => state.series);
+    const setSeries = useSerieStore((state) => state.setSeries);
+    const removeSerie = useSerieStore((state) => state.removeSerie);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -22,17 +24,14 @@ function SeriePage() {
         loadData();
     }, []);
 
-    const fetchSeries = async () => {
-        setLoading(true);
-        const resp = await getAllSerieService();
-        setSeries(resp.data);
-        setLoading(false);
-    };
-
     const handleDelete = async (id) => {
         if (window.confirm('¿Estás seguro de que quieres eliminar esta serie?')) {
-            await deleteSerieService(id);
-            await fetchSeries();
+            try {
+                await deleteSerieService(id);
+                removeSerie(id);
+            } catch (error) {
+                setError('No se pudo eliminar la serie.');
+            }
         }
     };
 
