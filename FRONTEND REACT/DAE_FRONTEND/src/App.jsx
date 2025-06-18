@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import CategoryPage from './pages/CategoryPage'
 import SeriePage from './pages/SeriePage'
 import SerieFormPage from './pages/serie/SerieFormPage'
+import SerieEditFormPage from './pages/serie/SerieEditFormPage'
 import CategoryFormPage from './pages/CategoryFormPage' 
 import HeaderComponent from './components/HeaderComponent'
 import { AppProvider } from './contexts/AppContext'
@@ -37,7 +38,7 @@ function App() {
             <Route path="/categories" element={<CategoryPage />} />
             <Route path="/series" element={<SeriePage />} />
             <Route path="/series/new" element={<SerieFormPage />} />
-            <Route path="/series/edit/:id" element={<SerieFormPage />} />
+            <Route path="/series/edit/:id" element={<SerieEditFormPage />} />
             <Route path="/categories/new" element={<CategoryFormPage />} />
             <Route path="/categories/edit/:id" element={<CategoryFormPage />} />
           </Route>
